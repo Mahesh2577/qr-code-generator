@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .form-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        #qr-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="form-title">Generate Your QR Code</h2>
+        <div id="form-container">
+            <form method="POST" action="/generate_qr" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mobile" class="form-label">Mobile</label>
+                    <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile number" required>
+                </div>
+                <div class="mb-3">
+                    <label for="work_phone" class="form-label">Work Phone</label>
+                    <input type="tel" class="form-control" id="work_phone" name="work_phone" placeholder="Enter your work phone" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="designation" class="form-label">Designation</label>
+                    <input type="text" class="form-control" id="designation" name="designation" placeholder="Enter your designation" required>
+                </div>
+                <div class="mb-3">
+                    <label for="organization" class="form-label">Organization</label>
+                    <input type="text" class="form-control" id="organization" name="organization" placeholder="Enter your organization" required>
+                </div>
+                <div class="mb-3">
+                    <label for="website" class="form-label">Website</label>
+                    <input type="url" class="form-control" id="website" name="website" placeholder="Enter your website URL">
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter your address" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="logo" class="form-label">Logo</label>
+                    <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Generate QR Code</button>
+            </form>
+        </div>
+        <div id="qr-container" class="text-center mt-4">
+            <h5>Your QR Code:</h5>
+            <img id="qr-image" src="{{ qr_code_path }}" alt="Generated QR Code" class="img-fluid">
+            <a id="download-link" href="{{ qr_code_path }}" download="qr_code.png" class="btn btn-success mt-2">Download QR Code</a>
+            <button id="reset-button" class="btn btn-secondary mt-2">Reset</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const formContainer = document.getElementById("form-container");
+            const qrContainer = document.getElementById("qr-container");
+            const resetButton = document.getElementById("reset-button");
+
+            if ("{{ qr_code_path }}") {
+                formContainer.style.display = "none";
+                qrContainer.style.display = "block";
+            }
+
+            resetButton.addEventListener("click", () => {
+                window.location.href = "/";
+            });
+        });
+    </script>
+    <div class="footer">Developed By Mahesh Tatkare</div>
+</body>
+</html>
